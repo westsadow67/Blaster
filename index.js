@@ -8,6 +8,9 @@ const context = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
+var enemyMuti = 1;
+var firstTime = true;
+
 class Player
 {
     constructor(x, y, radius, color)
@@ -56,13 +59,14 @@ class Projectile
 
 class Enemy
 {
-    constructor(x, y, radius, color, velocity)
+    constructor(x, y, radius, color, velocity, veloMult)
     {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.color = color;
         this.velocity = velocity;
+        this.veloMult = veloMult;
     }
 
     draw()
@@ -76,8 +80,8 @@ class Enemy
     update()
     {
         this.draw();
-        this.x = this.x + this.velocity.x;
-        this.y = this.y + this.velocity.y;
+        this.x = this.x + (this.velocity.x * this.veloMult);
+        this.y = this.y + (this.velocity.y * this.veloMult);
     }
 }
 
@@ -131,14 +135,17 @@ function init()
     enemies = [];
     particles = [];
     score = 0;
+    enemyMuti = 1;
     scoreL.innerHTML = score;
     bigScoreL.innerHTML = score;
 }
 
 function SpawnEnemies()
 {
-    setInterval(function() 
+    if (firstTime)
     {
+        setInterval(function() 
+        {
         const radius = Math.random() * (30 - 10) + 10;
         let x;
         let y;
@@ -157,8 +164,9 @@ function SpawnEnemies()
         const angle = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x);
         const velocity = {x: Math.cos(angle), y: Math.sin(angle)};
 
-        enemies.push(new Enemy(x, y, radius, color, velocity));
-    }, 1000);
+        enemies.push(new Enemy(x, y, radius, color, velocity, enemyMuti));
+        }, 100);
+    }
 }
 
 let animationId;
@@ -228,6 +236,8 @@ function animate()
                         {
                         projectiles.splice(projectileIndex, 1);
                         }, 0);
+
+                        enemyMuti += 0.2;
                     }
                     else
                     {
@@ -239,6 +249,8 @@ function animate()
                         enemies.splice(index, 1);
                         projectiles.splice(projectileIndex, 1);
                         }, 0);
+
+                        enemyMuti += 0.2;
                     }
                 }
             });
@@ -258,5 +270,6 @@ startGameL.addEventListener("click", () =>
     init();
     animate();
     SpawnEnemies();
+    firstTime = false;
     modalL.style.display = "none";
 })
