@@ -165,7 +165,7 @@ function SpawnEnemies()
         const velocity = {x: Math.cos(angle), y: Math.sin(angle)};
 
         enemies.push(new Enemy(x, y, radius, color, velocity, enemyMuti));
-        }, 100);
+        }, 1000);
     }
 }
 
