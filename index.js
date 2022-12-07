@@ -164,6 +164,7 @@ function SpawnEnemies()
         const angle = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x);
         const velocity = {x: Math.cos(angle), y: Math.sin(angle)};
 
+        console.log("Enemy spawned");
         enemies.push(new Enemy(x, y, radius, color, velocity, enemyMuti));
         }, 1000);
     }
