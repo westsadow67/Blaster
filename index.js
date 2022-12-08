@@ -1,8 +1,9 @@
 const canvas = document.querySelector("canvas");
-const scoreL = document.querySelector("#scoreL");
-const startGameL = document.querySelector("#startGameL");
-const modalL = document.querySelector("#modalL");
-const bigScoreL = document.querySelector("#bigScoreL");
+const scoreEL = document.querySelector("#scoreEL");
+const startGameEL = document.querySelector("#startGameEL");
+const modalEL = document.querySelector("#modalEL");
+const bigScoreEL = document.querySelector("#bigScoreEL");
+const bestScoreEL = document.querySelector("#bestScoreEL");
 const context = canvas.getContext("2d");
 
 canvas.width = innerWidth;
@@ -10,6 +11,7 @@ canvas.height = innerHeight;
 
 var enemyMuti = 1;
 var firstTime = true;
+var bestScore = 0;
 
 class Player
 {
@@ -136,8 +138,8 @@ function init()
     particles = [];
     score = 0;
     enemyMuti = 1;
-    scoreL.innerHTML = score;
-    bigScoreL.innerHTML = score;
+    scoreEL.innerHTML = score;
+    bigScoreEL.innerHTML = score;
 }
 
 function SpawnEnemies()
@@ -213,8 +215,13 @@ function animate()
         if (dist - enemy.radius - player.radius < 1)
         {
             cancelAnimationFrame(animationId);
-            modalL.style.display = "grid";
-            bigScoreL.innerHTML = score;
+            modalEL.style.display = "grid";
+            if (score > bestScore)
+            {
+                bestScore = score;
+            }
+            bestScoreEL.innerHTML = bestScore;
+            bigScoreEL.innerHTML = score;
         }
 
         projectiles.forEach((projectile, projectileIndex) => 
@@ -230,7 +237,7 @@ function animate()
                     if (enemy.radius - 5 > 500)
                     {
                         score += 100;
-                        scoreL.innerHTML = score;
+                        scoreEL.innerHTML = score;
 
                         enemy.radius -= 5;
                         setTimeout(() =>
@@ -243,7 +250,7 @@ function animate()
                     else
                     {
                         score += 250;
-                        scoreL.innerHTML = score;
+                        scoreEL.innerHTML = score;
 
                         setTimeout(() =>
                         {
@@ -266,11 +273,11 @@ addEventListener("click", function(event)
     projectiles.push(new Projectile(canvas.width / 2, canvas.height / 2, 5, "white", velocity));
 });
 
-startGameL.addEventListener("click", () =>
+startGameEL.addEventListener("click", () =>
 {
     init();
     animate();
     SpawnEnemies();
     firstTime = false;
-    modalL.style.display = "none";
+    modalEL.style.display = "none";
 })

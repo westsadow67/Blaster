@@ -35,6 +35,12 @@
             padding: 3%;
             border-radius: 50px;
         }
+        div.bestScore
+        {
+            text-align: center;
+            font-size: large;
+            font-weight: bold;
+        }
         h1
         {
             font-size: 500%;
@@ -60,15 +66,18 @@
 </head>
 <body>
     <div class="score">
-        <span>Score: </span><span id="scoreL">0</span>
+        <span>Score: </span><span id="scoreEL">0</span>
     </div>
 
-    <div class = "div1" id = "modalL">
+    <div class = "div1" id = "modalEL">
         <div class = "div2">
-            <h1 id="bigScoreL">0</h1>
+            <div class="bestScore">
+                <span>Best Score: </span><span id="bestScoreEL">0</span>
+            </div>
+            <h1 id="bigScoreEL">0</h1>
             <p>Points</p>
             <div>
-                <button id = "startGameL">Start Game</button>
+                <button id = "startGameEL">Start Game</button>
             </div>
         </div>
     </div>
